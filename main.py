@@ -142,3 +142,37 @@ class Tic_Tac_Toe:
               print('It\'s a tie')
 
         return gameover
+	# author: Gacha76 (Sharan)
+	# Conversion from Logical to Grid Position - 
+	# ------------------------------------------------------------------
+    def convert_logical_to_grid_position(self, logical_position):
+        logical_position = np.array(logical_position, dtype=int)
+        return (size_of_board / 3) * logical_position + size_of_board / 6
+
+	# ------------------------------------------------------------------
+	# author: Gacha76 (Sharan)
+	# Conversion from Grid to Logical Position - 
+	# ------------------------------------------------------------------
+    def convert_grid_to_logical_position(self, grid_position):
+        grid_position = np.array(grid_position)
+        return np.array(grid_position // (size_of_board / 3), dtype=int)
+
+	# ------------------------------------------------------------------
+	# author: Gacha76 (Sharan)
+	# Function to check if grid is occupied or not - 
+	# ------------------------------------------------------------------
+    def is_grid_occupied(self, logical_position):
+        if self.board_status[logical_position[0]][logical_position[1]] == 0:
+            return False
+        else:
+            return True
+        
+	# ------------------------------------------------------------------
+    # author: Aayushi Padia
+    # Play Again -
+    # ------------------------------------------------------------------
+    def play_again(self):
+        self.initialize_board()
+        self.player_X_starts = not self.player_X_starts
+        self.player_X_turns = self.player_X_starts
+        self.board_status = np.zeros(shape=(3,3))
