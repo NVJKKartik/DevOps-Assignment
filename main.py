@@ -25,6 +25,6 @@ Format for adding author name =>
 #What does this function do?
 def function():
 
-USE TABS OVER SPACE FOR IDENTATION
+USE TABS AND NOT SPACES FOR INDENTATION
 
 '''
