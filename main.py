@@ -137,3 +137,13 @@ class Tic_Tac_Toe:
             return False
         else:
             return True
+        
+	# ------------------------------------------------------------------
+    # author: Aayushi Padia
+    # Play Again -
+    # ------------------------------------------------------------------
+    def play_again(self):
+        self.initialize_board()
+        self.player_X_starts = not self.player_X_starts
+        self.player_X_turns = self.player_X_starts
+        self.board_status = np.zeros(shape=(3,3))
