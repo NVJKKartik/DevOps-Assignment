@@ -121,3 +121,33 @@ class Tic_Tac_Toe():
         self.player_X_turns = self.player_X_starts
         self.board_status = np.zeros(shape=(3,3))
 
+	def is_tie(self):
+
+			r, c = np.where(self.board_status == 0)
+			tie = False
+			if len(r) == 0:
+				tie = True
+
+			return tie
+
+
+		def is_gameover(self):
+			# Either someone wins or all grid occupied
+			self.X_wins = self.is_winner('X')
+			if not self.X_wins:
+				self.O_wins = self.is_winner('O')
+
+			if not self.O_wins:
+				self.tie = self.is_tie()
+
+			gameover = self.X_wins or self.O_wins or self.tie
+
+			if self.X_wins:
+				print('X wins')
+			if self.O_wins:
+				print('O wins')
+			if self.tie:
+				print('Its a tie')
+
+			return gameover
+			
