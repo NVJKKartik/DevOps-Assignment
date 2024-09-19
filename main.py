@@ -33,7 +33,7 @@ USE TABS AND NOT SPACES FOR INDENTATION
 from tkinter import *
 import numpy as np
 
-size_of_board = 600
+size_of_board = 750
 symbol_size = (size_of_board / 3 - size_of_board / 8) / 2
 symbol_thickness = 50
 symbol_X_color = '#EE4035'
@@ -203,30 +203,30 @@ class Tic_Tac_Toe:
 
     def click(self, event):
         grid_position = [event.x,event.y]
-        logical_position = self.convert_grid_to_logical(grid_position)
+        logical_position = self.convert_grid_to_logical_position(grid_position)
         if not self.reset_board:
             if self.player_X_turns:
                 if not self.is_grid_occupied(logical_position):
                     self.draw_X(logical_position)
                     self.board_status[logical_position[0]] [logical_position[1]] = -1
                     self.player_X_turns = not self.player_X_turns
-                else:
-                    if not self.is_grid_occupied(logical_position):
-                        self.draw_O(logical_position)
-                        self.board_status[logical_position[0]][logical_position[1]] = 1
-                        self.player_X_turns = not self.player_X_turn
+            else:
+                if not self.is_grid_occupied(logical_position):
+                    self.draw_O(logical_position)
+                    self.board_status[logical_position[0]][logical_position[1]] = 1
+                    self.player_X_turns = not self.player_X_turns
 
                         #Check if game is concluded
-                        if self.is_gameover():
-                            self.display_gameover()
+            if self.is_gameover():
+                self.display_gameover()
 
                             # print('Done')
-                        else: #play Again 
-                            self.canvas.delete("all")
-                            self.play_again()
-                            self.reset_board = False
+        else: #play Again 
+            self.canvas.delete("all")
+            self.play_again()
+            self.reset_board = False
 
-		# ------------------------------------------------------------------
+	# ------------------------------------------------------------------
     # author: Priyesh Gupta
     # display game over
     # ------------------------------------------------------------------
