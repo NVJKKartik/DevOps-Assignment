@@ -262,3 +262,8 @@ class Tic_Tac_Toe:
             score_text = 'Click to play again \n'
             self.canvas.create_text(size_of_board / 2, 15 * size_of_board / 16, font="cmr 20 bold", fill="gray",
                                     text=score_text)
+
+
+
+game_instance = Tic_Tac_Toe()
+game_instance.mainloop()
