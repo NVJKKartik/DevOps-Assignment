@@ -112,7 +112,10 @@ class Tic_Tac_Toe:
                                  grid_position[0] + symbol_size, grid_position[1] - symbol_size,
                                  width=symbol_thickness, fill=symbol_X_color)
 
-
+	# ------------------------------------------------------------------
+    # author: Vivaan Sharma
+    # is_tie and is_gameover
+    # ------------------------------------------------------------------
     def is_tie(self):
         r, c = np.where(self.board_status == 0)
         tie = False
