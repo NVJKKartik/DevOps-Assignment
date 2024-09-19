@@ -28,8 +28,8 @@ def function():
 USE TABS AND NOT SPACES FOR INDENTATION
 
 '''
-
-
+import random
+import math
 from tkinter import *
 import numpy as np
 
@@ -46,7 +46,7 @@ class Tic_Tac_Toe:
     # author: PlatJack
     # Game Initialization Functions -
     # ------------------------------------------------------------------
-    def __init__(self):
+    def __init__(self, play_with_ai = False):
         self.window = Tk()
         self.window.title('Tic-Tac-Toe')
         self.canvas = Canvas(self.window, width=size_of_board, height=size_of_board)
@@ -57,6 +57,14 @@ class Tic_Tac_Toe:
         self.initialize_board()
         self.player_X_turns = True
         self.board_status = np.zeros(shape=(3, 3))
+        self.play_with_ai = play_with_ai
+
+        #Player Initialisation
+        self.human_X = HumanPlayer('X')
+        if play_with_ai:
+            self.opponent_O = SmartComputerPlayer('O')
+        else:
+            self.opponent_O = HumanPlayer('X')
 
         self.player_X_starts = True
         self.reset_board = False
@@ -202,6 +210,25 @@ class Tic_Tac_Toe:
     # ------------------------------------------------------------------
 
     def click(self, event):
+        if not self.player_X_turns and self.play_with_ai:
+            ai_move = self.opponent_O.get_move(self)
+            if ai_move is not None:
+                logical_position = [ai_move//3, ai_move % 3]
+                self.board_status[logical_position[0]][logical_position[1]] = 1
+                self.draw_O(logical_position)
+                self.player_X_turns = not self.player_X_turns
+                
+
+
+                if self.is_gameover():
+                    self.display_gameover()
+            else:
+                self.canvas.delete("all")
+                self.play_again()
+                self.reset_board = False
+            return
+
+
         grid_position = [event.x,event.y]
         logical_position = self.convert_grid_to_logical_position(grid_position)
         if not self.reset_board:
@@ -251,6 +278,7 @@ class Tic_Tac_Toe:
             score_text = 'Scores \n'
             self.canvas.create_text(size_of_board / 2, 5 * size_of_board / 8, font="cmr 40 bold", fill=Green_color,
                                     text=score_text)
+            self.reset_board = True
 
             score_text = 'Player 1 (X) : ' + str(self.X_score) + '\n'
             score_text += 'Player 2 (O): ' + str(self.O_score) + '\n'
@@ -262,8 +290,96 @@ class Tic_Tac_Toe:
             score_text = 'Click to play again \n'
             self.canvas.create_text(size_of_board / 2, 15 * size_of_board / 16, font="cmr 20 bold", fill="gray",
                                     text=score_text)
+            
+	# ------------------------------------------------------------------
+    # author: N.V.J.K Kartik
+    # Opponent types and logic for the AI move
+    # ------------------------------------------------------------------
+
+
+class HumanPlayer:
+    def __init__(self, letter):
+        self.letter = letter
+
+
+class SmartComputerPlayer:
+    def __init__(self, letter):
+        self.letter = letter
+        self.opponent_letter = 'O' if letter == 'X' else 'X'
+
+    def get_move(self, game):
+        if game.is_winner(self.letter) or game.is_winner(self.opponent_letter) or game.is_tie():
+            return None
+
+        available_moves = [(r, c) for r in range(3) for c in range(3) if game.board_status[r][c] == 0]
+        if len(available_moves) == 9:
+            return random.choice(available_moves)[0] * 3 + random.choice(available_moves)[1]
+
+        best_move = self.minimax(game, self.letter)['position']
+
+        if best_move is None:
+            return None
+        return best_move[0] * 3 + best_move[1]
+
+    def minimax(self, game, player):
+        max_player = self.letter
+        other_player = self.opponent_letter
+
+        if game.is_winner(self.opponent_letter):
+            return {'position': None, 'score': -1}
+        elif game.is_winner(self.letter):
+            return {'position': None, 'score': 1}
+        elif game.is_tie():
+            return {'position': None, 'score': 0}
+
+        available_moves = [(r, c) for r in range(3) for c in range(3) if game.board_status[r][c] == 0]
+
+        if player == max_player:
+            best = {'position': None, 'score': -math.inf}
+        else:
+            best = {'position': None, 'score': math.inf}
+
+        for possible_move in available_moves:
+            game.board_status[possible_move[0]][possible_move[1]] = -1 if player == 'X' else 1
+
+            sim_score = self.minimax(game, other_player)
+
+            game.board_status[possible_move[0]][possible_move[1]] = 0
+            sim_score['position'] = possible_move
+
+            if player == max_player:
+                if sim_score['score'] > best['score']:
+                    best = sim_score
+            else:
+                if sim_score['score'] < best['score']:
+                    best = sim_score
+
+        return best
+
+	# ------------------------------------------------------------------
+    # author:N.V.J.K Kartik
+    # Driver Code with Main menu
+    # ------------------------------------------------------------------
 
 
 
-game_instance = Tic_Tac_Toe()
-game_instance.mainloop()
+def main_menu():
+    while(True):
+        print("Welcome to Tic Tac Toe Game!")
+        print("1. Play against Human")
+        print("2. Play against Computer")
+        choice = input("Enter 1 or 2: ")
+        if choice == '1':
+            game = Tic_Tac_Toe(play_with_ai=False)
+            game.mainloop()
+            break
+        elif choice == '2':
+            game = Tic_Tac_Toe(play_with_ai=True)
+            game.mainloop()
+            break
+        else:
+            print('Invalid choice please select either 1 or 2!')
+
+
+if __name__ == '__main__':
+    main_menu()
