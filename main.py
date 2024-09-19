@@ -196,3 +196,32 @@ class Tic_Tac_Toe:
         self.player_X_turns = self.player_X_starts
         self.board_status = np.zeros(shape=(3,3))
 
+	# ------------------------------------------------------------------
+    # author: Vinayak
+    # Click -
+    # ------------------------------------------------------------------
+
+    def click(self, event):
+        grid_position = [event.x,event.y]
+        logical_position = self.convert_grid_to_logical(grid_position)
+        if not self.reset_board:
+            if self.player_X_turns:
+                if not self.is_grid_occupied(logical_position):
+                    self.draw_X(logical_position)
+                    self.board_status[logical_position[0]] [logical_position[1]] = -1
+                    self.player_X_turns = not self.player_X_turns
+                else:
+                    if not self.is_grid_occupied(logical_position):
+                        self.draw_O(logical_position)
+                        self.board_status[logical_position[0]][logical_position[1]] = 1
+                        self.player_X_turns = not self.player_X_turn
+
+                        #Check if game is concluded
+                        if self.is_gameover():
+                            self.display_gameover()
+
+                            # print('Done')
+                        else: #play Again 
+                            self.canvas.delete("all")
+                            self.play_again()
+                            self.reset_board = False
