@@ -121,6 +121,11 @@ class Tic_Tac_Toe():
         self.player_X_turns = self.player_X_starts
         self.board_status = np.zeros(shape=(3,3))
 
+# ------------------------------------------------------------------
+	# author: Vivaan Sharma
+	# is_tie function - 
+	# ------------------------------------------------------------------	
+	
 	def is_tie(self):
 
 			r, c = np.where(self.board_status == 0)
