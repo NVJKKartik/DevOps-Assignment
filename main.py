@@ -97,3 +97,28 @@ class Tic_Tac_Toe():
         self.canvas.create_oval(grid_position[0] - symbol_size, grid_position[1] - symbol_size,
                                 grid_position[0] + symbol_size, grid_position[1] + symbol_size, width=symbol_thickness,
                                 outline=symbol_O_color)
+
+
+	# ------------------------------------------------------------------
+	# author: ShravyaBhat
+	#  - Check for winner by checking 3 three consecutive marks either in any row, column, or along the diagonals
+	# ------------------------------------------------------------------
+	def is_winner(self, player):
+
+        player = -1 if player == 'X' else 1
+
+        # Three in a row
+        for i in range(3):
+            if self.board_status[i][0] == self.board_status[i][1] == self.board_status[i][2] == player:
+                return True
+            if self.board_status[0][i] == self.board_status[1][i] == self.board_status[2][i] == player:
+                return True
+
+        # Diagonals
+        if self.board_status[0][0] == self.board_status[1][1] == self.board_status[2][2] == player:
+            return True
+
+        if self.board_status[0][2] == self.board_status[1][1] == self.board_status[2][0] == player:
+            return True
+
+        return False
