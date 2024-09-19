@@ -166,6 +166,25 @@ class Tic_Tac_Toe:
             return False
         else:
             return True
+
+	
+	# ------------------------------------------------------------------
+	# author: ShravyaBhat
+	# Added Function to check for winner by looking at 3 consecutive rows, columns or diagonals to be same
+	# ------------------------------------------------------------------
+	def is_winner(self,player):
+		player = -1 if player =='X' else 1
+		for i in range(3):
+			if self.board_status[i][0] == self.board_status[i][1] == self.board_status[i][2]==player:
+				return True
+			if self.board_status[0][i] == self.board_status[1][i] == self.board_status[2][i] == player:
+				return True
+			if self.board_status[0][0] == self.board_status[1][1] == self.board_status[2][2] == player:
+				retur True
+			if self.board_status[0][2] == self.board_status[1][1] == self.board_status[2][0] == player:
+				return True
+		return False
+
         
 	# ------------------------------------------------------------------
     # author: Aayushi Padia
@@ -177,33 +196,3 @@ class Tic_Tac_Toe:
         self.player_X_turns = self.player_X_starts
         self.board_status = np.zeros(shape=(3,3))
 
-
-	# ------------------------------------------------------------------
-    # author: Vinayak
-    # Click -
-    # ------------------------------------------------------------------
-
-    def click(self, event):
-        grid_position = [event.x,event.y]
-        logical_position = self.convert_grid_to_logical(grid_position)
-        if not self.reset_board:
-            if self.player_X_turns:
-                if not self.is_grid_occupied(logical_position):
-                    self.draw_X(logical_position)
-                    self.board_status[logical_position[0]] [logical_position[1]] = -1
-                    self.player_X_turns = not self.player_X_turns
-                else:
-                    if not self.is_grid_occupied(logical_position):
-                        self.draw_O(logical_position)
-                        self.board_status[logical_position[0]][logical_position[1]] = 1
-                        self.player_X_turns = not self.player_X_turn
-
-                        #Check if game is concluded
-                        if self.is_gameover():
-                            self.display_gameover()
-
-                            # print('Done')
-                        else: #play Again 
-                            self.canvas.delete("all")
-                            self.play_again()
-                            self.reset_board = False
