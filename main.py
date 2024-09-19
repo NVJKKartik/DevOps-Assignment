@@ -172,18 +172,18 @@ class Tic_Tac_Toe:
 	# author: ShravyaBhat
 	# Added Function to check for winner by looking at 3 consecutive rows, columns or diagonals to be same
 	# ------------------------------------------------------------------
-	def is_winner(self,player):
-		player = -1 if player =='X' else 1
-		for i in range(3):
-			if self.board_status[i][0] == self.board_status[i][1] == self.board_status[i][2]==player:
-				return True
-			if self.board_status[0][i] == self.board_status[1][i] == self.board_status[2][i] == player:
-				return True
-			if self.board_status[0][0] == self.board_status[1][1] == self.board_status[2][2] == player:
-				retur True
-			if self.board_status[0][2] == self.board_status[1][1] == self.board_status[2][0] == player:
-				return True
-		return False
+    def is_winner(self, player):
+        player = -1 if player == 'X' else 1
+        for i in range(3):
+            if self.board_status[i][0] == self.board_status[i][1] == self.board_status[i][2] == player:
+                return True
+            if self.board_status[0][i] == self.board_status[1][i] == self.board_status[2][i] == player:
+                return True
+        if self.board_status[0][0] == self.board_status[1][1] == self.board_status[2][2] == player:
+            return True
+        if self.board_status[0][2] == self.board_status[1][1] == self.board_status[2][0] == player:
+            return True
+        return False 
 
         
 	# ------------------------------------------------------------------
