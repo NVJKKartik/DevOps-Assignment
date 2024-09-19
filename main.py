@@ -85,7 +85,7 @@ class Tic_Tac_Toe():
 			self.canvas.create_line(0, (i + 1) * size_of_board / 3, size_of_board, (i + 1) * size_of_board / 3)
 
 
-# ------------------------------------------------------------------
+	# ------------------------------------------------------------------
 	# author: Aryan T N
 	# Draw O - 
 	# ------------------------------------------------------------------
@@ -97,7 +97,9 @@ class Tic_Tac_Toe():
             self.canvas.create_oval(grid_position[0] - symbol_size, grid_position[1] - symbol_size,
                                     grid_position[0] + symbol_size, grid_position[1] + symbol_size, width=symbol_thickness,
                                     outline=symbol_O_color)
-# ------------------------------------------------------------------
+
+
+	# ------------------------------------------------------------------
 	# author: Rohan Chidri
 	# Draw X - 
 	# ------------------------------------------------------------------
@@ -109,5 +111,30 @@ class Tic_Tac_Toe():
         self.canvas.create_line(grid_position[0] - symbol_size, grid_position[1] + symbol_size,
                                 grid_position[0] + symbol_size, grid_position[1] - symbol_size, width=symbol_thickness,
                                 fill=symbol_X_color)
-        
-        
+
+
+	# ------------------------------------------------------------------
+	# author: Gacha76 (Sharan)
+	# Conversion from Logical to Grid Position - 
+	# ------------------------------------------------------------------
+	def convert_logical_to_grid_position(self, logical_position):
+        logical_position = np.array(logical_position, dtype=int)
+        return (size_of_board / 3) * logical_position + size_of_board / 6
+
+	# ------------------------------------------------------------------
+	# author: Gacha76 (Sharan)
+	# Conversion from Grid to Logical Position - 
+	# ------------------------------------------------------------------
+    def convert_grid_to_logical_position(self, grid_position):
+        grid_position = np.array(grid_position)
+        return np.array(grid_position // (size_of_board / 3), dtype=int)
+
+	# ------------------------------------------------------------------
+	# author: Gacha76 (Sharan)
+	# Function to check if grid is occupied or not - 
+	# ------------------------------------------------------------------
+    def is_grid_occupied(self, logical_position):
+        if self.board_status[logical_position[0]][logical_position[1]] == 0:
+            return False
+        else:
+            return True
