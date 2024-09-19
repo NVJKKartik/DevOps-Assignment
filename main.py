@@ -113,6 +113,35 @@ class Tic_Tac_Toe:
                                  width=symbol_thickness, fill=symbol_X_color)
 
 	# ------------------------------------------------------------------
+    # author: Vivaan Sharma
+    # is_tie and is_gameover
+    # ------------------------------------------------------------------
+    def is_tie(self):
+        r, c = np.where(self.board_status == 0)
+        tie = False
+        if len(r) == 0:
+           tie = True
+        return tie
+
+    def is_gameover(self):
+		# Either someone wins or all grid occupied
+        self.X_wins = self.is_winner('X')
+        if not self.X_wins:  
+              self.O_wins = self.is_winner('O')
+
+        if not self.O_wins:
+              self.tie = self.is_tie()
+
+        gameover = self.X_wins or self.O_wins or self.tie
+
+        if self.X_wins:
+              print('X wins')
+        if self.O_wins:
+              print('O wins') 
+        if self.tie:
+              print('It\'s a tie')
+
+        return gameover
 	# author: Gacha76 (Sharan)
 	# Conversion from Logical to Grid Position - 
 	# ------------------------------------------------------------------
@@ -137,6 +166,7 @@ class Tic_Tac_Toe:
             return False
         else:
             return True
+
 	
 	# ------------------------------------------------------------------
 	# author: ShravyaBhat
@@ -154,4 +184,15 @@ class Tic_Tac_Toe:
 			if self.board_status[0][2] == self.board_status[1][1] == self.board_status[2][0] == player:
 				return True
 		return False
- 
+
+        
+	# ------------------------------------------------------------------
+    # author: Aayushi Padia
+    # Play Again -
+    # ------------------------------------------------------------------
+    def play_again(self):
+        self.initialize_board()
+        self.player_X_starts = not self.player_X_starts
+        self.player_X_turns = self.player_X_starts
+        self.board_status = np.zeros(shape=(3,3))
+
